@@ -1,0 +1,87 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro %}
+<!-- Styles block -->
+{% block styles%}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+  integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Technology Pitches</h2>
+      <div id="technology">
+        {{ macro.showPitch(technology)}}
+      </div>
+      <h2>Business Pitches</h2>
+      <div id="business">
+        {{ macro.showPitch(business) }}
+      </div>
+      <h2>Social Pitches</h2>
+      <div id="social">
+        {{ macro.showPitch(social) }}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Programming Pitches</h2>
+      <div id="programming">
+        {{ macro.showPitch(programming) }}
+      </div>
+      <h2>Sports Pitches</h2>
+      <div id="sports">
+        {{ macro.showPitch(sports) }}
+      </div>
+      <h2>Religion Pitches</h2>
+      <div id="religion">
+        {{ macro.showPitch(religion) }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <footer class="text-center text-white" style="background-color: #15616d;">
+    <!-- Grid container -->
+    <div class="container pt-4">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <!-- Facebook -->
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+          data-mdb-ripple-color="dark"><i class="fab fa-facebook-f"></i></a>
+
+        <!-- Twitter -->
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+          data-mdb-ripple-color="dark"><i class="fab fa-twitter"></i></a>
+
+        <!-- Google -->
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+          data-mdb-ripple-color="dark"><i class="fab fa-google"></i></a>
+
+        <!-- Instagram -->
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+          data-mdb-ripple-color="dark"><i class="fab fa-instagram"></i></a>
+
+        <!-- Linkedin -->
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+          data-mdb-ripple-color="dark"><i class="fab fa-linkedin"></i></a>
+        <!-- Github -->
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+          data-mdb-ripple-color="dark"><i class="fab fa-github"></i></a>
+      </section>
+      <!--Social media -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-dark" href="https://github.com/abdirahmnan-ahmednoor/" target="_blank"></a>
+    </div>
+    
+  </footer>
+</div>
+{% endblock%}
