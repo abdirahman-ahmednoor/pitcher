@@ -26,7 +26,7 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
 
     # initializing  flask extension
-    login_manager.iit_app(app)
+    login_manager.init_app(app)
     db.init_app(app)
     bootstrap.init_app(app)
     configure_uploads(app, photos)

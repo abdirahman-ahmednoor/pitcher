@@ -1,4 +1,3 @@
-from re import RegexFlag
 from flask import render_template, redirect, url_for, flash, request
 from ..models import User
 from .. import db
@@ -8,7 +7,7 @@ from flask_login import login_user, logout_user, login_required
 from ..email import mail_message
 
 
-@auth.route('/login', method = ['GET', 'POST'])
+@auth.route('/login', methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():

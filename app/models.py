@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import db, login_manager
 from flask_login import UserMixin, current_user
@@ -9,7 +8,7 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(user_id)
 
-class User(UserMixin, db, Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(255), unique = True, nullable = False)
@@ -49,7 +48,7 @@ class Pitch(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title =db.Column(db.String(255), nullable = False)
     post = db.Column(db.Text(), nullable = False) 
-    comment = db.relationhip('Comment', backref = 'user', lazy = 'dynamic')
+    comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
     upvote = db.relationship('Upvote', backref = 'user', lazy = 'dynamic')
     downvote = db.relationship('Downvote', backref = 'user', lazy = 'dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -63,20 +62,40 @@ class Pitch(db.Model):
     def __refr__(self):
         return f'Pitch {self.post}'
 
-class Comment(db, Model):
+class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key = True)
-    comment = db.Column(db.Text(), nullabel = False)
+    comment = db.Column(db.Text(), nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)          
-    pitch_id = db.COlumn(db.Integer, db.ForeignKey('pitch.id'), nullable = False)
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitch.id'), nullable = False)
 
     def save_c(self):
         db.session.add(self)
         db.session.commit()
-        
+
+    @classmethod
+    def get_comments(cls,pitch_id):
+       comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+
+       return comments
+  
+    def __repr__(self):
+        return f'comment:{self.comment}'    
+
+class Upvote(db.Model):
+    __tablename__ = 'upvotes'
+
+    id = db.Column(db.Integer,primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+  
+    def save(self):
+       db.session.add(self)
+       db.session.commit()
+    
     @classmethod
     def get_upvotes(cls, id):
-        upvote = User.query.filter_by(pitch_id = id).all()
+        upvote = Upvote.query.filter_by(pitch_id = id).all()
         return upvote
 
     def __repr__(self):

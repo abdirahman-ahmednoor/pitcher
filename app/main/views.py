@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, abort, request
-from flask import login_required, current_user
+from flask_login import login_required, current_user
 from . import main
 from .forms import UpdateProfile, PitchForm, CommentForm
 from .. import db, photos
@@ -17,7 +17,7 @@ def index():
     social = Pitch.query.filter_by(category = 'Social').all()
     return render_template('index.html', pitches = pitches, technology = technology, business = business, programming = programming, religion = religion, sports = sports, social = social)
 
-@main.route('/create_new', method = ['POST', 'GET'])
+@main.route('/create_new', methods= ['POST', 'GET'])
 @login_required
 def new_pitch():
     form = PitchForm()
@@ -32,7 +32,7 @@ def new_pitch():
 
     return render_template('new_pitch.html', form = form)
 
-@main.route('/comment/<int:pitch_id>', method = ['POST', 'GET'])
+@main.route('/comment/<int:pitch_id>', methods = ['POST', 'GET'])
 @login_required
 def comment(pitch_id):
     form = CommentForm()
@@ -57,7 +57,7 @@ def profile(name):
         abort(404)
     return render_template("profile/profile.html", user = user, posts = posts)
 
-@main.route('/user/<name>/updateprofile', method = ['POST', 'GET'])
+@main.route('/user/<name>/updateprofile', methods = ['POST', 'GET'])
 @login_required
 def updateprofile(name):
     form = UpdateProfile()
@@ -70,7 +70,7 @@ def updateprofile(name):
         return redirect(url_for('.profile', name = name))
     return render_template('profile/update.html', form = form)
 
-@main.route('/user/<name>/update/pic', method = ['POST'])
+@main.route('/user/<name>/update/pic', methods = ['POST'])
 @login_required
 def update_pic(name):
     user = User.query.filter_by(username = name).first()
@@ -81,7 +81,7 @@ def update_pic(name):
         db.session.commit()
     return redirect(url_for('main.profile', name = name))
 
-@main.route('/like/<int:id>', method = ['POST', 'GET'])
+@main.route('/like/<int:id>', methods = ['POST', 'GET'])
 @login_required
 def like(id):
     get_pitches = Upvote.get_upvotes(id)
@@ -97,7 +97,7 @@ def like(id):
     new_vote.save()
     return redirect(url_for('main.index', id =id))
 
-@main.route('/dislike/<int:id>', method =  ['POST', 'GET'])
+@main.route('/dislike/<int:id>', methods =  ['POST', 'GET'])
 @login_required
 def dislikke(id):
     pitch = Downvote.get_downvote(id)
