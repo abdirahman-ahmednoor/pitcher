@@ -5,7 +5,8 @@ from .forms import UpdateProfile, PitchForm, CommentForm
 from .. import db, photos
 from ..models import User, Pitch, Comment, Upvote, Downvote
 
-@main.route('/create_new', methods = ['POST', 'GET'])
+
+@main.route('/')
 def index():
     pitches = Pitch.query.all()
     technology = Pitch.query.filter_by(category = 'Technology').all()
@@ -69,7 +70,7 @@ def updateprofile(name):
         return redirect(url_for('.profile', name = name))
     return render_template('profile/update.html', form = form)
 
-@main.route('/user/<name>/update/pic', method = ['POST', 'GET'])
+@main.route('/user/<name>/update/pic', method = ['POST'])
 @login_required
 def update_pic(name):
     user = User.query.filter_by(username = name).first()
@@ -83,7 +84,7 @@ def update_pic(name):
 @main.route('/like/<int:id>', method = ['POST', 'GET'])
 @login_required
 def like(id):
-    get_pitches = Upvote.get_upvote(id)
+    get_pitches = Upvote.get_upvotes(id)
     valid_string = f'{current_user.id}:{id}'
     for pitch in get_pitches:
         to_str = f'{pitch}' 
