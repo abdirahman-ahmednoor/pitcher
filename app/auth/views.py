@@ -12,10 +12,10 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data).first()
-        if user is not None and user.verify_password(form.password.data):
+        if user is not None and user.verify_pasword(form.pasword.data):
             login_user(user, form.remember.data)
             return redirect(request.args.get('next') or url_for ('main.index'))
-        flash('Invalid username or Password')
+        flash('Invalid username or pasword')
     return render_template('auth/login.html', loginform = form)        
 
 @auth.route('/logout')
@@ -28,7 +28,7 @@ def logout():
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email = form.email.data, username = form.username.data,password = form.password.data)
+        user = User(email = form.email.data, username = form.username.data,pasword = form.pasword.data)
         user.save_u()
 
         mail_message("Welcome to Pitch","email/welcome_user",user.email,user=user)

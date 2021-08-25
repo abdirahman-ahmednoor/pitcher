@@ -90,7 +90,7 @@ def like(id):
         to_str = f'{pitch}' 
         print(valid_string+" "+to_str)
         if valid_string == to_str:
-            return redirect(url_for('main.idex', id =id))
+            return redirect(url_for('main.index', id =id))
         else:
             continue
     new_vote = Upvote(user = current_user, pitch_id = id)
@@ -99,8 +99,8 @@ def like(id):
 
 @main.route('/dislike/<int:id>', methods =  ['POST', 'GET'])
 @login_required
-def dislikke(id):
-    pitch = Downvote.get_downvote(id)
+def dislike(id):
+    pitch = Downvote.get_downvotes(id)
     valid_string = f'{current_user.id}:{id}'
     for p in pitch:
         to_str = f'{p}'

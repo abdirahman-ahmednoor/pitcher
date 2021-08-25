@@ -5,15 +5,15 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Valid
 
 class LoginForm(FlaskForm):
     email = StringField('Your Email Address', validators=[Required(), Email()])
-    password = PasswordField('Password', validators=[Required()])
+    pasword = PasswordField('pasword', validators=[Required()])
     remember = BooleanField('Remember me')
     submit = SubmitField('Sign In')
 
 class RegistrationForm(FlaskForm):
     email = StringField('Your Email Address',validators=[Required(), Email()])
     username = StringField('Enter your username', validators=[Required()])
-    password = PasswordField('Password', validators=[Required(), Email(), EqualTo('password')])
-    password_confirm = PasswordField('Confirm Password', validators=[Required()])
+    pasword = PasswordField('pasword', validators=[Required(), EqualTo('pasword_confirm',message = 'paswords must match')])
+    pasword_confirm = PasswordField('Confirm pasword', validators=[Required()])
     submit = SubmitField('Sign Up')
 
     def validate_email(self, data_field):
