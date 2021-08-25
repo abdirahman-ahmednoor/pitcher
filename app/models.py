@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pitches = db.relationship('Pitch', backref = 'user', lazy = 'dynamic')
-    comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
+    comments = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
     upvote = db.relationship('Upvote', backref = 'user', lazy = 'dynamic')
     downvote = db.relationship('Downvote', backref = 'user', lazy = 'dynamic')
 
@@ -44,13 +44,13 @@ class User(UserMixin, db.Model):
         return f'User {self.username}'
 
 class Pitch(db.Model):
-    __tableman__ = 'pitches'
+    __tablename__ = 'pitches'
     id = db.Column(db.Integer, primary_key = True)
     title =db.Column(db.String(255), nullable = False)
     post = db.Column(db.Text(), nullable = False) 
-    comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
-    upvote = db.relationship('Upvote', backref = 'user', lazy = 'dynamic')
-    downvote = db.relationship('Downvote', backref = 'user', lazy = 'dynamic')
+    comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
+    upvote = db.relationship('Upvote', backref = 'pitches', lazy = 'dynamic')
+    downvote = db.relationship('Downvote', backref = 'pitches', lazy = 'dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     time = db.Column(db.DateTime, default = datetime.utcnow)
     category = db.Column(db.String(255), index = True, nullable = False)
@@ -59,7 +59,7 @@ class Pitch(db.Model):
         db.session.add(self) 
         db.session.commit()
 
-    def __refr__(self):
+    def __repr__(self):
         return f'Pitch {self.post}'
 
 class Comment(db.Model):
@@ -67,7 +67,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     comment = db.Column(db.Text(), nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)          
-    pitch_id = db.Column(db.Integer, db.ForeignKey('pitch.id'), nullable = False)
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'), nullable = False)
 
     def save_c(self):
         db.session.add(self)

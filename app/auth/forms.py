@@ -6,13 +6,13 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Valid
 class LoginForm(FlaskForm):
     email = StringField('Your Email Address', validators=[Required(), Email()])
     password = PasswordField('Password', validators=[Required()])
-    remember = BooleanField('REmember me')
+    remember = BooleanField('Remember me')
     submit = SubmitField('Sign In')
 
 class RegistrationForm(FlaskForm):
     email = StringField('Your Email Address',validators=[Required(), Email()])
     username = StringField('Enter your username', validators=[Required()])
-    password = PasswordField('Password', validators=[Required(), Email(), EqualTo('password_confirm', message = 'Password must match')])
+    password = PasswordField('Password', validators=[Required(), Email(), EqualTo('password')])
     password_confirm = PasswordField('Confirm Password', validators=[Required()])
     submit = SubmitField('Sign Up')
 

@@ -2,7 +2,7 @@ from app.models import Comment, User
 from app import db
 
 def setUp(self):
-    self.user_Abdi = User(username = 'Abdirahman', password = 'blade123', email = 'abdirahman.noor@gmail.com')
+    self.user_Abdi = User(username = 'abdirahman', password = 'blade123', email = 'abdirahman.noor@gmail.com')
     self.new_comment = Comment(id = 1, user_id = 10, comment = 'No cap', pitch_id = 12)
 
 def tearDown(self):
