@@ -11,7 +11,7 @@ def index():
     pitches = Pitch.query.all()
     technology = Pitch.query.filter_by(category = 'Technology').all()
     business = Pitch.query.filter_by(category = 'Business').all()
-    programming = Pitch.query.filter_by(category = 'Programing').all()
+    programming = Pitch.query.filter_by(category = 'Programming').all()
     religion = Pitch.query.filter_by(category = 'Religion').all()
     sports = Pitch.query.filter_by(category = 'Sports').all()
     social = Pitch.query.filter_by(category = 'Social').all()
